@@ -1,7 +1,12 @@
 <mat-sidenav-container fullscreen>
   <mat-toolbar color="primary">
     <div class="toolbar-tools">
-      <a class="menu-item" mat-button [routerLink]="['courses']">
+      <a
+        class="menu-item"
+        mat-button
+        [routerLink]="['courses']"
+        routerLinkActive="menu-item-active"
+      >
         <span>Courses</span>
       </a>
 
@@ -48,7 +53,7 @@
 
   <messages></messages>
 
-  <loading></loading>
+  <loading [detectRouting]="true"></loading>
 
   <router-outlet></router-outlet>
 </mat-sidenav-container>
