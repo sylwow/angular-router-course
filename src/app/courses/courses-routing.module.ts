@@ -4,7 +4,11 @@ import { resolve } from 'dns';
 import { CourseComponent } from './course/course.component';
 import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
 import { HomeComponent } from './home/home.component';
+import { LessonDetailComponent } from './lesson/lesson-detail.component';
+import { LessonsListComponent } from './lessons-list/lessons-list.component';
 import { CourseResolver } from './resolvers/course.resolver';
+import { LessonResolver } from './resolvers/lesson.resolver';
+import { LessonsResolver } from './resolvers/lessons.resolver';
 
 
 const routes: Routes = [
@@ -16,6 +20,18 @@ const routes: Routes = [
     path: ':course',
     resolve: { course: CourseResolver },
     component: CourseComponent,
+    children: [
+      {
+        path: 'lessons/:lessonSeqNo',
+        component: LessonDetailComponent,
+        resolve: { lesson: LessonResolver },
+      },
+      {
+        path: '',
+        resolve: { lessons: LessonsResolver },
+        component: LessonsListComponent
+      },
+    ],
   },
 ];
 
@@ -25,7 +41,9 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
   providers: [
-    CourseResolver
+    CourseResolver,
+    LessonsResolver,
+    LessonResolver,
   ]
 })
 export class CoursesRoutingModule {
