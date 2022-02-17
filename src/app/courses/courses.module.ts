@@ -8,7 +8,7 @@ import { LessonDetailComponent } from "./lesson/lesson-detail.component";
 import { CourseDialogComponent } from "./course-dialog/course-dialog.component";
 import { CourseComponent } from "./course/course.component";
 import { HomeComponent } from "./home/home.component";
-import { CoursesService } from "./services/courses.service";
+import { CoursesService } from "../services/courses.service";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatCardModule } from "@angular/material/card";

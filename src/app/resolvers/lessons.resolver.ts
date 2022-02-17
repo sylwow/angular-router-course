@@ -5,7 +5,7 @@ import {
   ActivatedRouteSnapshot
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { LessonSummary } from '../model/lesson-summary';
+import { LessonSummary } from '../courses/model/lesson-summary';
 import { CoursesService } from '../services/courses.service';
 
 @Injectable()

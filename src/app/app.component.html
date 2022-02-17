@@ -23,6 +23,7 @@
         mat-button
         class="menu-item"
         [routerLink]="['login']"
+        *ngIf="auth.isLoggedOut$ | async"
         routerLinkActive="menu-item-active"
       >
         <mat-icon>account_circle</mat-icon>

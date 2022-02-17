@@ -3,12 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { resolve } from 'dns';
 import { CourseComponent } from './course/course.component';
 import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { ConfirmExitGuard } from '../guards/confirm-exit.guard';
 import { HomeComponent } from './home/home.component';
 import { LessonDetailComponent } from './lesson/lesson-detail.component';
 import { LessonsListComponent } from './lessons-list/lessons-list.component';
-import { CourseResolver } from './resolvers/course.resolver';
-import { LessonResolver } from './resolvers/lesson.resolver';
-import { LessonsResolver } from './resolvers/lessons.resolver';
+import { CourseResolver } from '../resolvers/course.resolver';
+import { LessonResolver } from '../resolvers/lesson.resolver';
+import { LessonsResolver } from '../resolvers/lessons.resolver';
 
 
 const routes: Routes = [
@@ -20,6 +22,9 @@ const routes: Routes = [
     path: ':course',
     resolve: { course: CourseResolver },
     component: CourseComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    canDeactivate: [ConfirmExitGuard],
     children: [
       {
         path: 'lessons/:lessonSeqNo',
@@ -44,6 +49,8 @@ const routes: Routes = [
     CourseResolver,
     LessonsResolver,
     LessonResolver,
+    AuthGuard,
+    ConfirmExitGuard,
   ]
 })
 export class CoursesRoutingModule {
