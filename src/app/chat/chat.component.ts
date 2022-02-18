@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'chat',
@@ -8,9 +8,35 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private route:ActivatedRoute) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }
 
+
+  /*
+  old way broken!!! currently does not work
+    <button
+      mat-raised-button
+      [routerLink]="['../', { outlets: { chat: null } }]"
+      (click)="closeChat()"
+    >
+      Close Chat
+    </button>
+  */
+  closeChat(): void {
+    this.router.navigate(
+      [
+        {
+          outlets: {
+            chat: null
+          }
+        }
+      ], {
+      relativeTo: this.route.parent // <--- PARENT activated route.
+    }
+    );
+  }
 }

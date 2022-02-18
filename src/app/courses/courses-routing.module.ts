@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { resolve } from 'dns';
 import { CourseComponent } from './course/course.component';
-import { CoursesCardListComponent } from './courses-card-list/courses-card-list.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { ConfirmExitGuard } from '../guards/confirm-exit.guard';
 import { HomeComponent } from './home/home.component';

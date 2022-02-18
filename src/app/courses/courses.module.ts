@@ -57,6 +57,6 @@ import { ReactiveFormsModule } from "@angular/forms";
   ],
   providers: [
     CoursesService
-  ]
+  ],
 })
 export class CoursesModule { }

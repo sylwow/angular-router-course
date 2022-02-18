@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, UrlSerializer } from '@angular/router';
+import { environment } from '../environments/environment';
 import { AboutComponent } from './about/about.component';
-import { AuthGuard } from './guards/auth.guard';
+import { ChatComponent } from './chat/chat.component';
 import { CanLoadAuthGuard } from './guards/can-load-auth.guard';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CustomPreloadStrategy } from './preloadStrategies/custom-preloading-strategy';
 
 
 const routes: Routes = [
@@ -22,9 +24,17 @@ const routes: Routes = [
     component: AboutComponent,
   },
   {
-    canLoad: [CanLoadAuthGuard],
+    //canLoad: [CanLoadAuthGuard],
     path: 'courses',
-    loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule)
+    loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule),
+    data: {
+      preload: true
+    }
+  },
+  {
+    path: 'helpdesk-chat',
+    component: ChatComponent,
+    outlet: 'chat'
   },
   {
     path: '**',
@@ -34,11 +44,22 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes)
+    // setup usful - bug fixes added to back compatibility
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: CustomPreloadStrategy,
+      enableTracing: false && !environment.production,
+      useHash: false, // uses hash urls usefull when you cant modify backend to redirect to index.html
+      scrollPositionRestoration: 'enabled',
+      paramsInheritanceStrategy: 'always',
+      relativeLinkResolution: 'corrected', // ../ => ./ for '' paths
+      malformedUriErrorHandler: (error: URIError, urlSerializer: UrlSerializer, url: string) => urlSerializer.parse('/page-not-found'),
+
+    })
   ],
   exports: [RouterModule],
   providers: [
     CanLoadAuthGuard,
+    CustomPreloadStrategy
   ]
 })
 export class AppRoutingModule {
